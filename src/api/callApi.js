@@ -1,9 +1,8 @@
-const API_BASE = process.env.API_BASE || '';
+const API_BASE = process.env.REACT_APP_FUNCTIONS_BASE_URL || '';
 
 export default (apiAction, dispatch, getState) =>
   fetch(`${API_BASE}${apiAction.url}`, {
     method: apiAction.method,
-    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },

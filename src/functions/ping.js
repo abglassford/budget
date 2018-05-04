@@ -1,6 +1,7 @@
-exports.handler = function(event, context, callback) {
-  callback(null, {
-    statusCode: 200,
-    body: "Hello, World"
-  });
+import { jsonResponse } from './utils/response';
+
+export const handler = (event, context, callback) => {
+  callback(null, jsonResponse({
+    status: 'OK',
+  }));
 };

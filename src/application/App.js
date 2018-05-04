@@ -6,10 +6,15 @@ import Header from './Header';
 
 import * as navigationSelectors from '../navigation/selectors';
 import * as navigationConstants from '../navigation/duck';
+import * as applicationAwaits from './applicationAwaits';
 
 import TransactionsList from '../transactions/TransactionsList';
 
 class App extends React.PureComponent {
+  componentDidMount() {
+    this.props.onPing();
+  }
+
   renderPage() {
     switch (this.props.location) {
       case navigationConstants.TRANSACTIONS:
@@ -36,4 +41,8 @@ const mapState = () =>
     location: navigationSelectors.makeCurrentLocationTypeSelector(),
   });
 
-export default connect(mapState)(App);
+const mapActions = {
+  onPing: applicationAwaits.ping,
+};
+
+export default connect(mapState, mapActions)(App);
