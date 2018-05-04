@@ -7,13 +7,17 @@ import Header from './Header';
 import * as navigationSelectors from '../navigation/selectors';
 import * as navigationConstants from '../navigation/duck';
 
+import TransactionsList from '../transactions/TransactionsList';
+
 class App extends React.PureComponent {
   renderPage() {
-    switch(this.props.location) {
+    switch (this.props.location) {
       case navigationConstants.TRANSACTIONS:
         return (
-          <div>TRANSACTIONS</div>
+          <TransactionsList />
         );
+      default:
+        return null;
     }
   }
 

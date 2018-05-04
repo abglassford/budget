@@ -1,14 +1,12 @@
 import React from 'react';
 import Link from 'redux-first-router-link';
-import { Segment, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import * as navActions from '../navigation/duck';
 
 class Header extends React.PureComponent {
   render() {
     return (
-      <Segment
-        as={Menu}
-      >
+      <Menu>
         <Menu.Item
           as={Link}
           to={navActions.home()}
@@ -33,7 +31,7 @@ class Header extends React.PureComponent {
         >
           Transactions
         </Menu.Item>
-      </Segment>
+      </Menu>
     );
   }
 }
