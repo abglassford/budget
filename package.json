@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-loader": "^7.1.4",
     "history": "^4.7.2",
+    "mongodb-stitch": "^3.0.3",
+    "netlify-lambda": "^0.4.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
@@ -19,8 +22,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && yarn functions:build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "functions:serve": "netlify-lambda serve ./src/functions",
+    "functions:build": "netlify-lambda build ./src/functions"
   }
 }
