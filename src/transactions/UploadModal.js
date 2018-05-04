@@ -21,7 +21,11 @@ class UploadModal extends React.PureComponent {
       <Modal trigger={this.props.trigger} closeIcon>
         <Modal.Header>Upload Transactions</Modal.Header>
         <Modal.Content>
-          <input type="file" onChange={this.onUpload} />
+          <input
+            type="file"
+            onChange={this.onUpload}
+            accept=".csv"
+          />
         </Modal.Content>
       </Modal>
     );

@@ -8,12 +8,13 @@ import thunk from 'redux-thunk';
 
 import api from './api/callApi';
 import router from './navigation/router';
+import appReducers from './reducers';
 
 const compose =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || reduxCompose;
 
-const rootReducer = combineReducers({
+const rootReducer = combineReducers(Object.assign({
   location: router.reducer,
-});
+}, appReducers));
 
 const store = createStore(
   rootReducer,
