@@ -1,6 +1,11 @@
 import * as R from 'ramda';
 import parse from 'csv-parse';
+
 import * as uploadTransactionsActions from './uploadTransactionsDuck';
+import * as metaActions from '../application/metaDuck';
+import * as selectors from './uploadTransactionsSelectors';
+
+const KEY = 'UPLOAD_TRANSACTION';
 
 const readFile = (file) =>
   new Promise((res, rej) => {
@@ -24,8 +29,9 @@ const parseCSV = data =>
     });
   });
 
-export const uploadTransactions = (file) =>
+export const parseCSVFile = (file) =>
   async (dispatch, _, callApi) => {
+    dispatch(metaActions.setStatus(KEY, 'PENDING'));
     const csv = await readFile(file);
     const output = await parseCSV(csv);
 
@@ -33,4 +39,19 @@ export const uploadTransactions = (file) =>
       header: R.head(output),
       body: R.tail(output),
     }));
+    dispatch(metaActions.setStatus(KEY, 'SUCCESS'));
   };
+
+export const uploadTransactions = (columnData) => {
+  const uploadDataSelector = selectors.makeUploadDataSelector();
+  return async (dispatch, getState, callApi) => {
+    const uploadData = uploadDataSelector(getState());
+    const transactions = uploadData.body.map(row => ({
+      date: row[columnData.date],
+      description: row[columnData.description],
+      amount: row[columnData.amount],
+    }));
+
+    console.log(transactions);
+  };
+};
