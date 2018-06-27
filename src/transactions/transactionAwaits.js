@@ -1,5 +1,8 @@
 import * as R from 'ramda';
 import parse from 'csv-parse';
+import * as dateFns from 'date-fns';
+
+import * as moneyUtils from '../utils/money';
 
 import * as uploadTransactionsActions from './uploadTransactionsDuck';
 import * as metaActions from '../application/metaDuck';
@@ -42,16 +45,26 @@ export const parseCSVFile = (file) =>
     dispatch(metaActions.setStatus(KEY, 'SUCCESS'));
   };
 
+const rowToTransaction = (columnData) => (row) => {
+  return {
+    date: dateFns.parse(row[columnData.date]),
+    description: row[columnData.description],
+    amount: moneyUtils.parseToCents(row[columnData.amount]),
+  };
+};
+
 export const uploadTransactions = (columnData) => {
   const uploadDataSelector = selectors.makeUploadDataSelector();
   return async (dispatch, getState, callApi) => {
     const uploadData = uploadDataSelector(getState());
-    const transactions = uploadData.body.map(row => ({
-      date: row[columnData.date],
-      description: row[columnData.description],
-      amount: row[columnData.amount],
-    }));
+    const transactions = uploadData.body.map(rowToTransaction(columnData));
 
-    console.log(transactions);
+    const result = await callApi({
+      method: 'POST',
+      url: '/uploadTransactions',
+      body: transactions,
+    });
+
+    console.log(result);
   };
 };

@@ -10,13 +10,17 @@ const processBody = (data) => {
   return JSON.stringify(data);
 };
 
-export default (apiAction, dispatch, getState) =>
-  fetch(`${API_BASE}${apiAction.url}`, {
+export default (apiAction, dispatch, getState) => {
+  const options = {
     method: apiAction.method,
     headers: {
       'Content-Type': 'application/json',
     },
     body: processBody(apiAction.body),
-  })
-  .then(response => response.json());
+  };
 
+  console.log(options);
+
+  return fetch(`${API_BASE}${apiAction.url}`, options)
+  .then(response => response.json());
+};
