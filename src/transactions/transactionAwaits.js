@@ -7,6 +7,8 @@ import * as moneyUtils from '../utils/money';
 import * as uploadTransactionsActions from './uploadTransactionsDuck';
 import * as metaActions from '../application/metaDuck';
 import * as selectors from './uploadTransactionsSelectors';
+import * as dataActions from '../data/dataDuck';
+import transactionSchema from './schema';
 
 const KEY = 'UPLOAD_TRANSACTION';
 
@@ -49,7 +51,7 @@ const rowToTransaction = (columnData) => (row) => {
   return {
     date: dateFns.parse(row[columnData.date]),
     description: row[columnData.description],
-    amount: moneyUtils.parseToCents(row[columnData.amount]),
+    amount: parseInt(moneyUtils.parseToCents(row[columnData.amount]), 10),
   };
 };
 
@@ -61,10 +63,28 @@ export const uploadTransactions = (columnData) => {
 
     const result = await callApi({
       method: 'POST',
-      url: '/uploadTransactions',
+      url: '/transactions',
       body: transactions,
     });
 
-    console.log(result);
+    dispatch(dataActions.storeData(
+      result,
+      [transactionSchema],
+      'uploadedTransactions',
+    ));
   };
 };
+
+export const getAllTransactions = () =>
+  async (dispatch, getState, callApi) => {
+    const result = await callApi({
+      method: 'GET',
+      url: '/transactions',
+    });
+
+    dispatch(dataActions.storeData(
+      result,
+      [transactionSchema],
+      'allTransactions',
+    ));
+  };

@@ -1,4 +1,4 @@
-const API_BASE = process.env.REACT_APP_FUNCTIONS_BASE_URL || '';
+const API_BASE = process.env.REACT_APP_API_BASE || '';
 
 const processBody = (data) => {
   if (!data) return null;
