@@ -7,6 +7,8 @@ import UploadModal from './UploadModal';
 import * as awaits from './transactionAwaits';
 import * as selectors from '../data/selectors';
 import transactionSchema from './schema';
+import { formatToDollars } from '../utils/money';
+import { formatForDisplay } from '../utils/date';
 
 class TransactionsList extends React.PureComponent {
   componentDidMount() {
@@ -16,8 +18,10 @@ class TransactionsList extends React.PureComponent {
   renderTransaction(transaction) {
     return (
       <Table.Row>
-        <Table.Cell>{transaction.id}</Table.Cell>
+        <Table.Cell>{formatForDisplay(transaction.date)}</Table.Cell>
         <Table.Cell>{transaction.description}</Table.Cell>
+        <Table.Cell>{transaction.categoryId}</Table.Cell>
+        <Table.Cell>{formatToDollars(transaction.amount)}</Table.Cell>
       </Table.Row>
     );
   }
@@ -42,7 +46,7 @@ class TransactionsList extends React.PureComponent {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>
-                Transaction ID
+                Date
               </Table.HeaderCell>
               <Table.HeaderCell>
                 Description
@@ -52,9 +56,6 @@ class TransactionsList extends React.PureComponent {
               </Table.HeaderCell>
               <Table.HeaderCell>
                 Amount
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                Date
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>

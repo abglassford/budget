@@ -6,3 +6,9 @@ export const parseToCents = (x) => {
 
   return parsed.value() * 100;
 };
+
+export const formatToDollars = (x, locale = 'en-US') => {
+  const dollars = Math.abs(x / 100);
+
+  return x < 0 ? `($${dollars})` : `$${dollars}`;
+};
