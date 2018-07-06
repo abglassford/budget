@@ -2,13 +2,13 @@ import * as R from 'ramda';
 import parse from 'csv-parse';
 import * as dateFns from 'date-fns';
 
-import * as moneyUtils from '../utils/money';
+import * as moneyUtils from '../../utils/money';
 
-import * as uploadTransactionsActions from './uploadTransactionsDuck';
-import * as metaActions from '../application/metaDuck';
-import * as selectors from './uploadTransactionsSelectors';
-import * as dataActions from '../data/dataDuck';
-import transactionSchema from './schema';
+import * as uploadTransactionsActions from '../ducks/uploadTransactions';
+import * as metaActions from '../../application/metaDuck';
+import * as selectors from '../selectors/uploadTransactions';
+import * as dataActions from '../../data/dataDuck';
+import transactionSchema from '../schemas/transactions';
 
 const KEY = 'UPLOAD_TRANSACTION';
 
@@ -55,6 +55,20 @@ const rowToTransaction = (columnData) => (row) => {
   };
 };
 
+export const getAllTransactions = () =>
+  async (dispatch, getState, callApi) => {
+    const result = await callApi({
+      method: 'GET',
+      url: '/transactions',
+    });
+
+    dispatch(dataActions.storeData(
+      result,
+      [transactionSchema],
+      'allTransactions',
+    ));
+  };
+
 export const uploadTransactions = (columnData) => {
   const uploadDataSelector = selectors.makeUploadDataSelector();
   return async (dispatch, getState, callApi) => {
@@ -72,19 +86,7 @@ export const uploadTransactions = (columnData) => {
       [transactionSchema],
       'uploadedTransactions',
     ));
+
+    dispatch(getAllTransactions());
   };
 };
-
-export const getAllTransactions = () =>
-  async (dispatch, getState, callApi) => {
-    const result = await callApi({
-      method: 'GET',
-      url: '/transactions',
-    });
-
-    dispatch(dataActions.storeData(
-      result,
-      [transactionSchema],
-      'allTransactions',
-    ));
-  };

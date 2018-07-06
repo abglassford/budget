@@ -8,7 +8,8 @@ import * as navigationSelectors from '../navigation/selectors';
 import * as navigationConstants from '../navigation/duck';
 import * as applicationAwaits from './applicationAwaits';
 
-import TransactionsList from '../transactions/TransactionsList';
+import TransactionsList from '../transactions/components/TransactionsList';
+import Budget from '../budget/components/Budget';
 
 class App extends React.PureComponent {
   componentDidMount() {
@@ -20,6 +21,10 @@ class App extends React.PureComponent {
       case navigationConstants.TRANSACTIONS:
         return (
           <TransactionsList />
+        );
+      case navigationConstants.BUDGET:
+        return (
+          <Budget />
         );
       default:
         return null;

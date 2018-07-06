@@ -22,5 +22,6 @@ export default (apiAction, dispatch, getState) => {
   console.log(options);
 
   return fetch(`${API_BASE}${apiAction.url}`, options)
-  .then(response => response.json());
+    .then(response => response.json())
+    .catch((e) => console.error(e));
 };

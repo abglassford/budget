@@ -4,11 +4,11 @@ import { createStructuredSelector } from 'reselect';
 import { Table, Menu } from 'semantic-ui-react';
 
 import UploadModal from './UploadModal';
-import * as awaits from './transactionAwaits';
-import * as selectors from '../data/selectors';
-import transactionSchema from './schema';
-import { formatToDollars } from '../utils/money';
-import { formatForDisplay } from '../utils/date';
+import * as awaits from '../awaits/transactions';
+import * as selectors from '../../data/selectors';
+import transactionSchema from '../schemas/transactions';
+import { formatToDollars } from '../../utils/money';
+import { formatForDisplay } from '../../utils/date';
 
 class TransactionsList extends React.PureComponent {
   componentDidMount() {
@@ -17,7 +17,7 @@ class TransactionsList extends React.PureComponent {
 
   renderTransaction(transaction) {
     return (
-      <Table.Row>
+      <Table.Row key={transaction.id}>
         <Table.Cell>{formatForDisplay(transaction.date)}</Table.Cell>
         <Table.Cell>{transaction.description}</Table.Cell>
         <Table.Cell>{transaction.categoryId}</Table.Cell>

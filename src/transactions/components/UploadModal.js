@@ -8,9 +8,9 @@ import {
   Button,
 } from 'semantic-ui-react';
 
-import * as transactionAwaits from './transactionAwaits';
-import * as selectors from './uploadTransactionsSelectors';
-import * as metaSelectors from '../application/metaSelectors';
+import * as transactionAwaits from '../awaits/transactions';
+import * as selectors from '../selectors/uploadTransactions';
+import * as metaSelectors from '../../application/metaSelectors';
 
 const KEY = 'UPLOAD_TRANSACTION';
 
