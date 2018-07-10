@@ -48,7 +48,7 @@ class TransactionsList extends React.PureComponent {
                 Category
               </Table.HeaderCell>
               <Table.HeaderCell>
-                Total
+                Balance
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
