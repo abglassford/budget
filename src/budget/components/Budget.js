@@ -11,7 +11,7 @@ import { formatForDisplay } from '../../utils/date';
 
 import AddCategoryModal from './AddCategoryModal';
 
-class TransactionsList extends React.PureComponent {
+class Budget extends React.PureComponent {
   componentDidMount() {
     this.props.onLoad();
   }
@@ -73,4 +73,4 @@ const mapActions = {
   onLoad: awaits.getAllCategories,
 };
 
-export default connect(mapState, mapActions)(TransactionsList);
+export default connect(mapState, mapActions)(Budget);

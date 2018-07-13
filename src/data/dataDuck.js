@@ -21,12 +21,22 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case STORE_DATA: {
       const {
+        data,
+        schema,
+      } = action.payload;
+
+      if (!data || !schema) {
+        return state;
+      }
+
+      const {
         entities,
         result,
       } = normalizr.normalize(
-        action.payload.data,
-        action.payload.schema,
+        data,
+        schema,
       );
+
       return update(state, {
         results: {
           [action.payload.key]: { $set: result },

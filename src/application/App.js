@@ -10,6 +10,7 @@ import * as applicationAwaits from './applicationAwaits';
 
 import TransactionsList from '../transactions/components/TransactionsList';
 import Budget from '../budget/components/Budget';
+import UserSettings from '../users/components/UserSettings';
 
 class App extends React.PureComponent {
   componentDidMount() {
@@ -25,6 +26,10 @@ class App extends React.PureComponent {
       case navigationConstants.BUDGET:
         return (
           <Budget />
+        );
+      case navigationConstants.USER_SETTINGS:
+        return (
+          <UserSettings />
         );
       default:
         return null;

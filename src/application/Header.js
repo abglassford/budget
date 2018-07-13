@@ -31,6 +31,18 @@ class Header extends React.PureComponent {
         >
           Transactions
         </Menu.Item>
+        <Menu.Item
+          as={Link}
+          to={navActions.accounts()}
+        >
+          Accounts
+        </Menu.Item>
+        <Menu.Item
+          as={Link}
+          to={navActions.userSettings()}
+        >
+          User Settings
+        </Menu.Item>
       </Menu>
     );
   }

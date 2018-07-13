@@ -9,6 +9,7 @@ import * as metaActions from '../../application/metaDuck';
 import * as selectors from '../selectors/uploadTransactions';
 import * as dataActions from '../../data/dataDuck';
 import transactionSchema from '../schemas/transactions';
+import * as currentUserAwaits from '../../users/awaits/currentUser';
 
 const KEY = 'UPLOAD_TRANSACTION';
 
@@ -57,9 +58,10 @@ const rowToTransaction = (columnData) => (row) => {
 
 export const getAllTransactions = () =>
   async (dispatch, getState, callApi) => {
+    const userId = await dispatch(currentUserAwaits.getCurrentUserId());
     const result = await callApi({
       method: 'GET',
-      url: '/transactions',
+      url: `/users/${userId}/transactions`,
     });
 
     dispatch(dataActions.storeData(
